@@ -51,4 +51,28 @@
 - (IBAction)changedSubpixelRendering:(id)sender {
 	for (BFRulerView *r in _rulers) r.allowSubpixelRendering = [sender state] == NSOnState;
 }
+
+- (void)applyGradient {
+	for (BFRulerView *r in _rulers) {
+		if (_gradientCheck.state == NSOnState) {
+			NSGradient *gradient = [[NSGradient alloc] initWithColors:@[_gradientWell1.color, _gradientWell2.color]];
+			r.backgroundGradient = gradient;
+		} else {
+			r.backgroundColor = _gradientWell1.color;
+		}
+	}
+}
+
+- (IBAction)gradientCheckChanged:(id)sender {
+	[self applyGradient];
+}
+
+- (IBAction)gradientColorChanged:(id)sender {
+	[self applyGradient];
+}
+
+- (IBAction)borderChanged:(id)sender {
+	for (BFRulerView *r in _rulers) r.borderColor = [sender color];
+}
+
 @end

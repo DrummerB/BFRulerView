@@ -32,6 +32,7 @@
 		_tickColor = [NSColor blackColor];
 		_allowSubpixelRendering = NO;
 		_labelFormat = @"%.0f";
+		_backgroundColor = [NSColor whiteColor];
     }
     return self;
 }
@@ -165,6 +166,27 @@
 	}
 }
 
+- (void)setBackgroundColor:(NSColor *)backgroundColor {
+	if (_backgroundColor != backgroundColor) {
+		_backgroundColor = backgroundColor;
+		[self setNeedsDisplay:YES];
+	}
+}
+
+- (void)setBackgroundGradient:(NSGradient *)backgroundGradient {
+	if (_backgroundGradient != backgroundGradient) {
+		_backgroundGradient = backgroundGradient;
+		[self setNeedsDisplay:YES];
+	}
+}
+
+- (void)setBorderColor:(NSColor *)borderColor {
+	if (_borderColor != borderColor) {
+		_borderColor = borderColor;
+		[self setNeedsDisplay:YES];
+	}
+}
+
 - (void)setPosition:(BFRulerViewPosition)position {
 	_position = position;
 	[self updateAutoresizingMask];
@@ -177,10 +199,22 @@
 - (void)drawRect:(NSRect)dirtyRect {
 	
 	CGContextRef c = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-	[_tickColor setStroke];
 	
-	[[NSColor whiteColor] setFill];
-	NSRectFill(dirtyRect);
+	CGFloat length = [self length];	// the longer size
+	CGFloat width = [self width];	// the shorter size
+	
+	// Draw background color, or if a gradient is set, the gradient.
+	if (_backgroundGradient) {
+		if (BFRulerViewPositionIsHorizonal(_position)) {
+			[_backgroundGradient drawFromPoint:NSMakePoint(0.0f, width) toPoint:NSMakePoint(0.0f, 0.0f) options:0];
+		} else {
+			[_backgroundGradient drawFromPoint:NSMakePoint(width, 0.0f) toPoint:NSMakePoint(0.0f, 0.0f) options:0];
+		}
+	} else {
+		[_backgroundColor setFill];
+		NSRectFill(dirtyRect);
+	}
+	
 	
 	CGFloat pixelOffset = _offset * _scale;
 	CGFloat valueOffset = _offset;
@@ -224,16 +258,11 @@
 	
 	int subTickIndex = (int)ceilf(fmodf(pixelOffset, tickLabelInterval) / tickInterval) % ticksPerLabelInterval;
 	
-	NSLog(@"poff: %.2f voff: %.2f tick: %.2f label: %.2f index: %d", pixelOffset, valueOffset, firstTickOffset, firstLabelTickOffset, subTickIndex);
-	
 	CGFloat labelValue = ceilf(valueOffset / labelInterval) * labelInterval;
-//	if (labelInterval < 0.0f) labelInterval += labelInterval;
 	
 	CGFloat currentOffset = firstTickOffset;
 	
-	CGFloat length = [self length];	// the longer size
-	CGFloat width = [self width];	// the shorter size
-	
+	// Draw the ticks, and labels.
 	CGFloat x, y;
 	CGFloat *xp = BFRulerViewPositionIsHorizonal(_position) ? &x : &y;
 	CGFloat *yp = BFRulerViewPositionIsHorizonal(_position) ? &y : &x;
@@ -248,7 +277,9 @@
 		y = BFRulerViewPositionIsHigh(_position) ? tickSize : width - tickSize;
 		CGContextAddLineToPoint(c, *xp, *yp);
 	
+		[_tickColor setStroke];
 		CGContextStrokePath(c);
+		
 		subTickIndex = (subTickIndex + 1) % ticksPerLabelInterval;
 		currentOffset += tickInterval;
 		
@@ -262,6 +293,15 @@
 			labelValue += labelInterval;
 		}
 	}
+	
+	// Stroke border line.
+	[_borderColor setStroke];
+	x = 0.5f;
+	y = BFRulerViewPositionIsHigh(_position) ? 0.5f : width - 0.5f;
+	CGContextMoveToPoint(c, *xp, *yp);
+	x = length - 0.5f;
+	CGContextAddLineToPoint(c, *xp, *yp);
+	CGContextStrokePath(c);
 }
 
 @end

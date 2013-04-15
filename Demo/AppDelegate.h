@@ -20,6 +20,10 @@
 @property (weak) IBOutlet BFRulerView *rulerRight;
 @property (nonatomic) NSArray *rulers;
 
+@property (weak) IBOutlet NSColorWell *gradientWell1;
+@property (weak) IBOutlet NSColorWell *gradientWell2;
+@property (weak) IBOutlet NSButton *gradientCheck;
+
 - (IBAction)changedOffset:(id)sender;
 - (IBAction)changedScale:(id)sender;
 - (IBAction)changedMinLabelInterval:(id)sender;
@@ -29,5 +33,8 @@
 - (IBAction)changedTickColor:(id)sender;
 - (IBAction)changedLabelColor:(id)sender;
 - (IBAction)changedSubpixelRendering:(id)sender;
+- (IBAction)gradientCheckChanged:(id)sender;
+- (IBAction)gradientColorChanged:(id)sender;
+- (IBAction)borderChanged:(id)sender;
 
 @end
