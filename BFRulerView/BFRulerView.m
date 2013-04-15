@@ -27,9 +27,11 @@
 		_minTickInterval = 3.0f;
 		_tickSize = 0.2f;
 		_labelTickSize = 1.0f;
+		_labelFont = [NSFont fontWithName:@"LucidaGrande" size:9.0];
 		_fontColor = [NSColor blackColor];
 		_tickColor = [NSColor blackColor];
 		_allowSubpixelRendering = NO;
+		_labelFormat = @"%.0f";
     }
     return self;
 }
@@ -156,6 +158,13 @@
 	}
 }
 
+- (void)setLabelFormat:(NSString *)labelFormat {
+	if (_labelFormat != labelFormat) {
+		_labelFormat = labelFormat;
+		[self setNeedsDisplay:YES];
+	}
+}
+
 - (void)setPosition:(BFRulerViewPosition)position {
 	_position = position;
 	[self updateAutoresizingMask];
@@ -172,6 +181,9 @@
 	
 	[[NSColor whiteColor] setFill];
 	NSRectFill(dirtyRect);
+	
+	CGFloat pixelOffset = _offset * _scale;
+	CGFloat valueOffset = _offset;
 	
 	CGFloat unitLength = _scale;	// scaled size of a pixel
 	CGFloat labelInterval = 1;		// label tick interval (in units, not pixels)
@@ -203,12 +215,19 @@
 	
 	CGFloat tickInterval = tickLabelInterval / ticksPerLabelInterval;
 
-	CGFloat firstTickOffset = fmodf(_offset, tickInterval);
-	CGFloat firstLabelTickOffset = fmodf(_offset, tickLabelInterval);
+	CGFloat firstTickOffset = fmodf(pixelOffset, tickInterval);
+	CGFloat firstLabelTickOffset = fmodf(pixelOffset, tickLabelInterval);
 	if (firstTickOffset < 0.0f) firstTickOffset += tickInterval;
 	if (firstLabelTickOffset < 0.0f) firstLabelTickOffset += tickLabelInterval;
+	if (firstTickOffset > 0) firstTickOffset = tickInterval - firstTickOffset;
+	if (firstLabelTickOffset > 0) firstLabelTickOffset = tickLabelInterval - firstLabelTickOffset;
 	
-	int subTickIndex = (firstLabelTickOffset - firstTickOffset) / tickInterval;
+	int subTickIndex = (int)ceilf(fmodf(pixelOffset, tickLabelInterval) / tickInterval) % ticksPerLabelInterval;
+	
+	NSLog(@"poff: %.2f voff: %.2f tick: %.2f label: %.2f index: %d", pixelOffset, valueOffset, firstTickOffset, firstLabelTickOffset, subTickIndex);
+	
+	CGFloat labelValue = ceilf(valueOffset / labelInterval) * labelInterval;
+//	if (labelInterval < 0.0f) labelInterval += labelInterval;
 	
 	CGFloat currentOffset = firstTickOffset;
 	
@@ -232,6 +251,16 @@
 		CGContextStrokePath(c);
 		subTickIndex = (subTickIndex + 1) % ticksPerLabelInterval;
 		currentOffset += tickInterval;
+		
+		if (isLabelTick) {
+			NSString *labelString = [NSString stringWithFormat:_labelFormat, labelValue + 0];
+			NSDictionary *attributes = @{NSFontAttributeName : _labelFont, NSForegroundColorAttributeName : _fontColor};
+			NSSize size = [labelString sizeWithAttributes:attributes];
+			x += 2;
+			y = BFRulerViewPositionIsHigh(_position) ? _tickSize * width : width - _tickSize * width - size.height;
+			[labelString drawAtPoint:NSMakePoint(*xp, *yp) withAttributes:attributes];
+			labelValue += labelInterval;
+		}
 	}
 }
 
