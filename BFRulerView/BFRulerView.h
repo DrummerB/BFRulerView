@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, BFRulerViewPosition) {
 @property (nonatomic) CGFloat offset;
 @property (nonatomic) CGFloat scale;
 @property (nonatomic) BFRulerViewPosition position;
+@property (nonatomic) BOOL allowSubpixelRendering;
 
 @property (nonatomic) CGFloat minLabelInterval;
 @property (nonatomic) CGFloat minTickInterval;
