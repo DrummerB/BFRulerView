@@ -285,11 +285,25 @@
 		
 		if (isLabelTick) {
 			NSString *labelString = [NSString stringWithFormat:_labelFormat, labelValue + 0];
-			NSDictionary *attributes = @{NSFontAttributeName : _labelFont, NSForegroundColorAttributeName : _fontColor};
-			NSSize size = [labelString sizeWithAttributes:attributes];
-			x += 2;
-			y = BFRulerViewPositionIsHigh(_position) ? _tickSize * width : width - _tickSize * width - size.height;
-			[labelString drawAtPoint:NSMakePoint(*xp, *yp) withAttributes:attributes];
+			NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+			style.maximumLineHeight = 10.0f;
+			NSDictionary *attributes = @{NSFontAttributeName : _labelFont,
+										 NSForegroundColorAttributeName : _fontColor,
+										 NSParagraphStyleAttributeName : style};
+			if (BFRulerViewPositionIsHorizonal(_position)) {
+				NSSize size = [labelString sizeWithAttributes:attributes];
+				x += 2;
+				y = BFRulerViewPositionIsHigh(_position) ? _tickSize * width : width - _tickSize * width - size.height;
+				y = roundf(y);
+				[labelString drawAtPoint:NSMakePoint(*xp, *yp) withAttributes:attributes];
+			} else {
+				NSSize charSize = [@"W" sizeWithAttributes:attributes];
+				x = BFRulerViewPositionIsHigh(_position) ? _tickSize * width + 2.0f : width - _tickSize * width - charSize.width;
+				x = roundf(x);
+				y = roundf(currentOffset) - 2.5f;
+				NSRect rect = NSMakeRect(x, y, 1, 0);
+				[labelString drawWithRect:rect options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes];
+			}
 			labelValue += labelInterval;
 		}
 	}
