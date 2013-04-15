@@ -13,7 +13,20 @@
 		ECA952B8171BEEAE003ED31C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = ECA952B6171BEEAE003ED31C /* Credits.rtf */; };
 		ECA952BB171BEEAE003ED31C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECA952BA171BEEAE003ED31C /* AppDelegate.m */; };
 		ECA952BE171BEEAE003ED31C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECA952BC171BEEAE003ED31C /* MainMenu.xib */; };
+		ECA952C9171BEEDF003ED31C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECA952A7171BEEAE003ED31C /* Cocoa.framework */; };
+		ECA952CF171BEEDF003ED31C /* BFRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECA952CE171BEEDF003ED31C /* BFRulerView.m */; };
+		ECA952D5171BF037003ED31C /* libBFRulerView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECA952C8171BEEDF003ED31C /* libBFRulerView.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ECA952D3171BF031003ED31C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ECA9529C171BEEAE003ED31C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ECA952C7171BEEDF003ED31C;
+			remoteInfo = BFRulerView;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		ECA952A4171BEEAE003ED31C /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +42,10 @@
 		ECA952B9171BEEAE003ED31C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ECA952BA171BEEAE003ED31C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		ECA952BD171BEEAE003ED31C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		ECA952C8171BEEDF003ED31C /* libBFRulerView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBFRulerView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECA952CC171BEEDF003ED31C /* BFRulerView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BFRulerView-Prefix.pch"; sourceTree = "<group>"; };
+		ECA952CD171BEEDF003ED31C /* BFRulerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFRulerView.h; sourceTree = "<group>"; };
+		ECA952CE171BEEDF003ED31C /* BFRulerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BFRulerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,7 +53,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECA952D5171BF037003ED31C /* libBFRulerView.a in Frameworks */,
 				ECA952A8171BEEAE003ED31C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA952C5171BEEDF003ED31C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA952C9171BEEDF003ED31C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +72,7 @@
 		ECA9529B171BEEAE003ED31C = {
 			isa = PBXGroup;
 			children = (
+				ECA952CA171BEEDF003ED31C /* BFRulerView */,
 				ECA952AD171BEEAE003ED31C /* Demo */,
 				ECA952A6171BEEAE003ED31C /* Frameworks */,
 				ECA952A5171BEEAE003ED31C /* Products */,
@@ -56,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				ECA952A4171BEEAE003ED31C /* Demo.app */,
+				ECA952C8171BEEDF003ED31C /* libBFRulerView.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,7 +130,35 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		ECA952CA171BEEDF003ED31C /* BFRulerView */ = {
+			isa = PBXGroup;
+			children = (
+				ECA952CD171BEEDF003ED31C /* BFRulerView.h */,
+				ECA952CE171BEEDF003ED31C /* BFRulerView.m */,
+				ECA952CB171BEEDF003ED31C /* Supporting Files */,
+			);
+			path = BFRulerView;
+			sourceTree = "<group>";
+		};
+		ECA952CB171BEEDF003ED31C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ECA952CC171BEEDF003ED31C /* BFRulerView-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		ECA952C6171BEEDF003ED31C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		ECA952A3171BEEAE003ED31C /* Demo */ = {
@@ -116,11 +172,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				ECA952D4171BF031003ED31C /* PBXTargetDependency */,
 			);
 			name = Demo;
 			productName = Demo;
 			productReference = ECA952A4171BEEAE003ED31C /* Demo.app */;
 			productType = "com.apple.product-type.application";
+		};
+		ECA952C7171BEEDF003ED31C /* BFRulerView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ECA952D0171BEEDF003ED31C /* Build configuration list for PBXNativeTarget "BFRulerView" */;
+			buildPhases = (
+				ECA952C4171BEEDF003ED31C /* Sources */,
+				ECA952C5171BEEDF003ED31C /* Frameworks */,
+				ECA952C6171BEEDF003ED31C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BFRulerView;
+			productName = BFRulerView;
+			productReference = ECA952C8171BEEDF003ED31C /* libBFRulerView.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -144,6 +218,7 @@
 			projectRoot = "";
 			targets = (
 				ECA952A3171BEEAE003ED31C /* Demo */,
+				ECA952C7171BEEDF003ED31C /* BFRulerView */,
 			);
 		};
 /* End PBXProject section */
@@ -171,7 +246,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ECA952C4171BEEDF003ED31C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECA952CF171BEEDF003ED31C /* BFRulerView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ECA952D4171BF031003ED31C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ECA952C7171BEEDF003ED31C /* BFRulerView */;
+			targetProxy = ECA952D3171BF031003ED31C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		ECA952B0171BEEAE003ED31C /* InfoPlist.strings */ = {
@@ -204,7 +295,7 @@
 		ECA952BF171BEEAE003ED31C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -237,7 +328,7 @@
 		ECA952C0171BEEAE003ED31C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -264,9 +355,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "./**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
+				HEADER_SEARCH_PATHS = "./**";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
+				LIBRARY_SEARCH_PATHS = "./**";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -276,11 +374,36 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "./**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
+				HEADER_SEARCH_PATHS = "./**";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
+				LIBRARY_SEARCH_PATHS = "./**";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		ECA952D1171BEEDF003ED31C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BFRulerView/BFRulerView-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ECA952D2171BEEDF003ED31C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BFRulerView/BFRulerView-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -301,6 +424,14 @@
 			buildConfigurations = (
 				ECA952C2171BEEAE003ED31C /* Debug */,
 				ECA952C3171BEEAE003ED31C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		ECA952D0171BEEDF003ED31C /* Build configuration list for PBXNativeTarget "BFRulerView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECA952D1171BEEDF003ED31C /* Debug */,
+				ECA952D2171BEEDF003ED31C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
