@@ -14,6 +14,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	self.rulers = @[_rulerTop, _rulerBottom, _rulerLeft, _rulerRight];
+	
 }
 
 - (IBAction)changedOffset:(id)sender {
@@ -72,7 +73,7 @@
 }
 
 - (IBAction)borderChanged:(id)sender {
-	for (BFRulerView *r in _rulers) r.borderColor = [sender color];
+	for (BFRulerView *r in _rulers) r.contentBorderColor = [sender color];
 }
 
 @end

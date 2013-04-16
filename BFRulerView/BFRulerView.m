@@ -33,6 +33,9 @@
 		_allowSubpixelRendering = NO;
 		_labelFormat = @"%.0f";
 		_backgroundColor = [NSColor whiteColor];
+		_contentBorderColor = [NSColor blackColor];
+		_outsideBorderColor = nil;
+		_startBorderColor = [NSColor blackColor];
     }
     return self;
 }
@@ -180,9 +183,16 @@
 	}
 }
 
-- (void)setBorderColor:(NSColor *)borderColor {
-	if (_borderColor != borderColor) {
-		_borderColor = borderColor;
+- (void)setContentBorderColor:(NSColor *)borderColor {
+	if (_contentBorderColor != borderColor) {
+		_contentBorderColor = borderColor;
+		[self setNeedsDisplay:YES];
+	}
+}
+
+- (void)setOutsideBorderColor:(NSColor *)outsideBorderColor {
+	if (_outsideBorderColor != outsideBorderColor) {
+		_outsideBorderColor = outsideBorderColor;
 		[self setNeedsDisplay:YES];
 	}
 }
@@ -191,6 +201,20 @@
 	_position = position;
 	[self updateAutoresizingMask];
 	[self setNeedsDisplay:YES];
+}
+
+- (void)setStartBorderColor:(NSColor *)shortBorderColor {
+	if (_startBorderColor != shortBorderColor) {
+		_startBorderColor = shortBorderColor;
+		[self setNeedsDisplay:YES];
+	}
+}
+
+- (void)setEndBorderColor:(NSColor *)endBorderColor {
+	if (_endBorderColor != endBorderColor) {
+		_endBorderColor = endBorderColor;
+		[self setNeedsDisplay:YES];
+	}
 }
 
 #pragma mark -
@@ -202,17 +226,41 @@
 	
 	CGFloat length = [self length];	// the longer size
 	CGFloat width = [self width];	// the shorter size
+
+	CGFloat x, y;
+	CGFloat *xp = BFRulerViewPositionIsHorizonal(_position) ? &x : &y;
+	CGFloat *yp = BFRulerViewPositionIsHorizonal(_position) ? &y : &x;
 	
 	// Draw background color, or if a gradient is set, the gradient.
 	if (_backgroundGradient) {
 		if (BFRulerViewPositionIsHorizonal(_position)) {
 			[_backgroundGradient drawFromPoint:NSMakePoint(0.0f, width) toPoint:NSMakePoint(0.0f, 0.0f) options:0];
 		} else {
-			[_backgroundGradient drawFromPoint:NSMakePoint(width, 0.0f) toPoint:NSMakePoint(0.0f, 0.0f) options:0];
+			[_backgroundGradient drawFromPoint:NSMakePoint(0.0f, 0.0f) toPoint:NSMakePoint(width, 0.0f) options:0];
 		}
 	} else {
 		[_backgroundColor setFill];
 		NSRectFill(dirtyRect);
+	}
+	
+	// Stroke short border line.
+	if (_startBorderColor) {
+		[_startBorderColor setStroke];
+		x = 0.5f;
+		y = 0.5f;
+		CGContextMoveToPoint(c, *xp, *yp);
+		y = width - 0.5f;
+		CGContextAddLineToPoint(c, *xp, *yp);
+		CGContextStrokePath(c);
+	}
+	if (_endBorderColor) {
+		[_endBorderColor setStroke];
+		x = length - 0.5f;
+		y = 0.5f;
+		CGContextMoveToPoint(c, *xp, *yp);
+		y = width - 0.5f;
+		CGContextAddLineToPoint(c, *xp, *yp);
+		CGContextStrokePath(c);
 	}
 	
 	
@@ -263,9 +311,7 @@
 	CGFloat currentOffset = firstTickOffset;
 	
 	// Draw the ticks, and labels.
-	CGFloat x, y;
-	CGFloat *xp = BFRulerViewPositionIsHorizonal(_position) ? &x : &y;
-	CGFloat *yp = BFRulerViewPositionIsHorizonal(_position) ? &y : &x;
+	
 	while (currentOffset < length) {
 		x = (_allowSubpixelRendering ? currentOffset : roundf(currentOffset)) + 0.5;
 		y = BFRulerViewPositionIsHigh(_position) ? 0.0f : width;
@@ -308,14 +354,27 @@
 		}
 	}
 	
-	// Stroke border line.
-	[_borderColor setStroke];
-	x = 0.5f;
-	y = BFRulerViewPositionIsHigh(_position) ? 0.5f : width - 0.5f;
-	CGContextMoveToPoint(c, *xp, *yp);
-	x = length - 0.5f;
-	CGContextAddLineToPoint(c, *xp, *yp);
-	CGContextStrokePath(c);
+	// Stroke content border line.
+	if (_contentBorderColor) {
+		[_contentBorderColor setStroke];
+		x = 0.5f;
+		y = BFRulerViewPositionIsHigh(_position) ? 0.5f : width - 0.5f;
+		CGContextMoveToPoint(c, *xp, *yp);
+		x = length - 0.5f;
+		CGContextAddLineToPoint(c, *xp, *yp);
+		CGContextStrokePath(c);
+	}
+	
+	// Stroke outside border line.
+	if (_outsideBorderColor) {
+		[_outsideBorderColor setStroke];
+		x = 0.5f;
+		y = 0.5f;
+		CGContextMoveToPoint(c, *xp, *yp);
+		x = length - 0.5f;
+		CGContextAddLineToPoint(c, *xp, *yp);
+		CGContextStrokePath(c);
+	}
 }
 
 @end

@@ -41,6 +41,10 @@ typedef NS_ENUM(NSUInteger, BFRulerViewPosition) {
 
 @property (nonatomic) NSGradient *backgroundGradient;
 @property (nonatomic) NSColor *backgroundColor;
-@property (nonatomic) NSColor *borderColor;
+
+@property (nonatomic) NSColor *contentBorderColor;
+@property (nonatomic) NSColor *outsideBorderColor;
+@property (nonatomic) NSColor *startBorderColor;
+@property (nonatomic) NSColor *endBorderColor;
 
 @end

@@ -426,6 +426,7 @@
 				ECA952C3171BEEAE003ED31C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ECA952D0171BEEDF003ED31C /* Build configuration list for PBXNativeTarget "BFRulerView" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +435,7 @@
 				ECA952D2171BEEDF003ED31C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
