@@ -247,18 +247,18 @@
 	if (_startBorderColor) {
 		[_startBorderColor setStroke];
 		x = 0.5f;
-		y = 0.5f;
+		y = 0.0;
 		CGContextMoveToPoint(c, *xp, *yp);
-		y = width - 0.5f;
+		y = width;
 		CGContextAddLineToPoint(c, *xp, *yp);
 		CGContextStrokePath(c);
 	}
 	if (_endBorderColor) {
 		[_endBorderColor setStroke];
 		x = length - 0.5f;
-		y = 0.5f;
+		y = 0.0f;
 		CGContextMoveToPoint(c, *xp, *yp);
-		y = width - 0.5f;
+		y = width;
 		CGContextAddLineToPoint(c, *xp, *yp);
 		CGContextStrokePath(c);
 	}
